@@ -1,86 +1,85 @@
 <template>
-    <div id="home1">
-        <h1>Q10</h1>
-        <h1>화상 상처의 크기는<br> 어느 정도 인가요?</h1>
-        <h3>(엄지와 검지 손가락으로 ok 모양을 만들어<br>생기는 원의 지름이 3cm입니다.)</h3>
-   
+    <div id="home2">
+        <h1>Q11</h1>
+        <h1>병원에서 치료를 받으셨나요?</h1>
+
         <b-button-group id="buttonDiv" size="lg">
         <b-button
+            class="yesnobutton"
             v-for="(btn, idx) in buttons"
             :key="idx"
             :pressed.sync="btn.state"
             variant="outline-warning">
-            {{ btn.caption }}
+            <div class="iconDiv"><b-icon id="icon" :icon="btn.symbol" :scale="btn.size"></b-icon></div>
+            <div class="textDiv">{{ btn.caption }}</div>
         </b-button>
         </b-button-group>
 
         <div id="BottomButtonDiv">
-            <b-button variant="light">이전</b-button>
-            <b-button variant="danger" @click="next">다음</b-button>
+            <b-button variant="light" @click="prev">이전</b-button>
+            <b-button variant="danger">다음</b-button>
         </div>
     </div>
 </template>
 <script>
-  export default {
-    data() {
+export default {
+
+
+     data() {
       return {
         buttons: [
-          { caption: '3cm 미만', state: false },
-          { caption: '3cm 이상 ~ 손바닥 미만', state: false },
-          { caption: '손바닥 이상', state: false },
+          { caption: '네', state: false, symbol:'circle', size:'5'},
+          { caption: '아니오', state: false, symbol:'x', size:'10' },
         ]
       }
     },
-    methods: {
-        next() {
+
+
+     methods: {
+        prev() {
             for(let i in this.buttons){
                 if(this.buttons[i].state){
-                    localStorage.setItem("check", i);
-                    this.$router.push('/h2');
+                    localStorage.setItem("check2", i);
+                    this.$router.push('/');
                 }
             }
         },
     },
 
     created() {
-     let num = localStorage.getItem("check");
+     let num = localStorage.getItem("check2");
      this.buttons[num].state = true;
   },
 
-  }
+};
 </script>
 <style scoped>
 
-#home1{
+#home2{
     margin:5vh;
 }
 
-#home1 h1{
+#home2 h1{
     margin-top:2vh;
     font-weight:bold;
-}
-
-#home1 h3{
-    margin-top:2vh;
-    color:gray;
 }
 
 #buttonDiv{
     width:100%;
     height:100%;
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items:center;
 }
 
 #buttonDiv button{
     width:100%;
-    height:10vh;
+    height:30vh;
     margin:2vh;
     font-weight: bold;
-    color:gray;
     box-shadow: 5px 5px 5px rgb(200, 200, 200, 0.3);
 }
+
 
 #BottomButtonDiv{
     width:100%;
@@ -98,6 +97,26 @@
     color:white;
     font-size:4vh;
     box-shadow: 5px 5px 5px rgb(200, 200, 200, 0.3);
+}
+
+.yesnobutton{
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction: column;
+}
+
+.iconDiv{
+    height:40%;
+
+}
+
+.textDiv{
+    height:5%;
+    font-size:5vh;
+    font-weight:bold;
 }
 
 </style>
