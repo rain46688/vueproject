@@ -9,7 +9,8 @@
             v-for="(btn, idx) in buttons"
             :key="idx"
             :pressed.sync="btn.state"
-            variant="outline-warning">
+            variant="outline-warning"
+            v-on:click="setactive(btn.num)">
             <div class="iconDiv"><b-icon id="icon" :icon="btn.symbol" :scale="btn.size"></b-icon></div>
             <div class="textDiv">{{ btn.caption }}</div>
         </b-button>
@@ -28,8 +29,8 @@ export default {
      data() {
       return {
         buttons: [
-          { caption: '네', state: false, symbol:'circle', size:'5'},
-          { caption: '아니오', state: false, symbol:'x', size:'10' },
+          { num:'0', caption: '네', state: false, symbol:'circle', size:'5'},
+          { num:'1', caption: '아니오', state: false, symbol:'x', size:'10' },
         ]
       }
     },
@@ -43,6 +44,12 @@ export default {
                     this.$router.push('/');
                 }
             }
+        },
+        setactive: function(num) {
+            for(let i in this.buttons){
+                this.buttons[i].state = false;
+            }
+            this.buttons[num].state = true;
         },
     },
 

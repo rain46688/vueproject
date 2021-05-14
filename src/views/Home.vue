@@ -9,7 +9,8 @@
             v-for="(btn, idx) in buttons"
             :key="idx"
             :pressed.sync="btn.state"
-            variant="outline-warning">
+            variant="outline-warning"
+            v-on:click="setactive(btn.num)">
             {{ btn.caption }}
         </b-button>
         </b-button-group>
@@ -25,9 +26,9 @@
     data() {
       return {
         buttons: [
-          { caption: '3cm 미만', state: false },
-          { caption: '3cm 이상 ~ 손바닥 미만', state: false },
-          { caption: '손바닥 이상', state: false },
+          { num:'0', caption: '3cm 미만', state: false },
+          { num:'1', caption: '3cm 이상 ~ 손바닥 미만', state: false },
+          { num:'2', caption: '손바닥 이상', state: false },
         ]
       }
     },
@@ -39,6 +40,12 @@
                     this.$router.push('/h2');
                 }
             }
+        },
+         setactive: function(num) {
+            for(let i in this.buttons){
+                this.buttons[i].state = false;
+            }
+            this.buttons[num].state = true;
         },
     },
 
